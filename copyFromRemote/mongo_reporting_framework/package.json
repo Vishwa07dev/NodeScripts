@@ -1,0 +1,77 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "mongo_reporting_framework@1.0.7",
+        "scope": null,
+        "escapedName": "mongo_reporting_framework",
+        "name": "mongo_reporting_framework",
+        "rawSpec": "1.0.7",
+        "spec": "1.0.7",
+        "type": "version"
+      },
+      "/home/app"
+    ]
+  ],
+  "_from": "mongo_reporting_framework@1.0.7",
+  "_id": "mongo_reporting_framework@1.0.7",
+  "_inCache": true,
+  "_location": "/mongo_reporting_framework",
+  "_nodeVersion": "6.10.2",
+  "_npmUser": {
+    "name": "vmohan",
+    "email": "vmohan@walmart.com"
+  },
+  "_npmVersion": "3.10.10",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "mongo_reporting_framework@1.0.7",
+    "scope": null,
+    "escapedName": "mongo_reporting_framework",
+    "name": "mongo_reporting_framework",
+    "rawSpec": "1.0.7",
+    "spec": "1.0.7",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://npme.walmart.com/mongo_reporting_framework/-/mongo_reporting_framework-1.0.7.tgz",
+  "_shasum": "175675e86e9f9287723068cb480b1fd80c9e56b7",
+  "_shrinkwrap": null,
+  "_spec": "mongo_reporting_framework@1.0.7",
+  "_where": "/home/app",
+  "author": "",
+  "dependencies": {
+    "async": "^2.3.0",
+    "body-parser": "^1.17.1",
+    "config.json": "0.0.4",
+    "express": "^4.15.2",
+    "json2csv": "^3.7.3",
+    "mongodb": "^2.2.26",
+    "mongoose": "^4.9.6",
+    "nodemailer": "^2.4.1"
+  },
+  "description": "Reporting framwork for supporting fixed set of queries from Mongo",
+  "devDependencies": {},
+  "dist": {
+    "shasum": "175675e86e9f9287723068cb480b1fd80c9e56b7",
+    "tarball": "http://npme.walmart.com/mongo_reporting_framework/-/mongo_reporting_framework-1.0.7.tgz"
+  },
+  "gitHead": "545dfe34f05f3c0e1cdffdf2cc7d7cf10c082af9",
+  "license": "ISC",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "vmohan",
+      "email": "vmohan@walmart.com"
+    }
+  ],
+  "name": "mongo_reporting_framework",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "version": "1.0.7"
+}

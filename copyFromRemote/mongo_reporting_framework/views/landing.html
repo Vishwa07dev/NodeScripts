@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>MCSE_REPORTING_FRAMEWORK</title>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
+
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img style="height :100%" alt="Walmart - MCSE reporting framework" src="/walmartLogo.jpg">
+            </a>
+        </div>
+        <div>
+            <h1 style="padding-left:27%" class="navbar-text navbar-center">MCSE Reporting Framework </h1>
+
+        </div>
+
+
+    </div>
+</nav>
+
+<div class=" container-fluid row" style="margin-top:5%">
+    <div class="col-xs-6 col-md-6">
+        <input id="dateRange" type="text" class="form-control" placeholder="Date range -- Maximum of 1 day"
+               name="daterange">
+    </div>
+    <div class="col-xs-6 col-md-2">
+        <select class="form-control" id="env">
+            <option>prod</option>
+            <option>pqa</option>
+            <option>stg</option>
+        </select>
+    </div>
+    <div class="col-xs-6 col-md-4">
+        <input id="profileName" type="text" class="form-control"
+               placeholder="Please enter profileName only in PQA env, ex -> DEV_TEST">
+    </div>
+    <div class="col-xs-6 col-md-6" style="margin-top:3%">
+        <input id="emailId" type="text" class="form-control" placeholder="comma separated emailIds<Optional>">
+    </div>
+
+    <div class="col-xs-6 col-md-6" style="margin-top:3%">
+        <label class="checkbox-inline">
+            <input type="checkbox" id="overAllResult" value="overallResult"> overAllResult
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="slaTier" value="splitBySLATier"> split by SLATier
+        </label>
+
+        <label class="checkbox-inline">
+            <input type="checkbox" id="dcType" value="splitByDCType"> split by DC type
+        </label>
+
+        <label class="checkbox-inline">
+            <input type="checkbox" id="cmType" value="splitByCMType"> split by CM type
+        </label>
+
+        <label class="checkbox-inline">
+            <input type="checkbox" id="dcId" value="splitByDC"> split by DC Id
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="cmId" value="splitByCM"> split by CM Id
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="dcDestState" value="splitByDCDestState"> split by DC-Destination state
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="dcCmType" value="splitByDCCmType"> split by DC Type-CM type
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="dcZone" value="splitByDCZone"> split by DC Id - Zone Id
+        </label>
+    </div>
+    <div class="col-xs-12 col-md-12" style="text-align:center;margin-top:35px">
+        <button id="report" type="button" class="btn btn-primary">Prepare me the report !</button>
+    </div>
+
+</div>
+
+<div align="center" id="alertDiv" class="alert alert-danger" role="alert"
+     style="width:50%;text-align:center; visibility: hidden ;margin-top:10%;margin-left:25%">...
+</div>
+<div align="center" id="alertDate" class="alert alert-danger" role="alert"
+     style="width:50%;text-align:center; visibility: hidden ;margin-top:2%;margin-left:25%">...
+</div>
+
+<div align="center" id="successResponse" class="alert alert-success" role="alert"
+     style="width:50%;text-align:center; visibility: hidden ;margin-top:2%;margin-left:25%">...
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('input[name="daterange"]').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 5,
+            locale: {
+                format: 'YYYY-MM-DD hh:mm:ss A'
+            }
+        });
+    });
+    <!-- 2017-04-30 12:00:00 AM - 2017-04-30 11:59:59 PM        2017-04-28T00:00:00-07:00-->
+    $("#report").click(function () {
+
+        $("#alertDiv").css("visibility", "hidden");
+        $("#alertDate").css("visibility", "hidden");
+        $("#successResponse").css("visibility", "hidden");
+        $("#emailId").css("background-color", "#FFFFFF");
+
+
+        var dateRange = $("#dateRange").val().split(" ");
+        if (dateRange[2] == "PM") {
+            var dateArr = dateRange[1].split(":");
+            var data = parseInt(dateArr[0]) + 12;
+            var data = data + ":" + dateArr[1] + ":" + dateArr[2];
+            dateRange[1] = data;
+        }
+
+        var startDate = dateRange[0] + "T" + dateRange[1] + "-07:00";
+
+        if (dateRange[6] == "PM") {
+            var dateArr = dateRange[5].split(":");
+            console.log(dateArr);
+            var data = parseInt(dateArr[0]) + 12;
+            var data = data + ":" + dateArr[1] + ":" + dateArr[2];
+            console.log(data);
+            dateRange[5] = data;
+        }
+
+        var endDate = dateRange[4] + "T" + dateRange[5] + "-07:00";
+
+
+        var envValue = $("#env").val();
+
+        var emailId = $("#emailId").val();
+
+        var profileName = $("#profileName").val();
+
+        var matrices = "";
+        if ($("#overAllResult").is(":checked")) {
+            matrices = matrices + $("#overAllResult").val() + ",";
+        }
+        if ($("#slaTier").is(":checked")) {
+            matrices = matrices + $("#slaTier").val() + ",";
+        }
+        if ($("#dcType").is(":checked")) {
+            matrices = matrices + $("#dcType").val() + ",";
+        }
+        if ($("#cmType").is(":checked")) {
+            matrices = matrices + $("#cmType").val() + ",";
+        }
+        if ($("#dcId").is(":checked")) {
+            matrices = matrices + $("#dcId").val() + ",";
+        }
+        if ($("#cmId").is(":checked")) {
+            matrices = matrices + $("#cmId").val() + ",";
+        }
+        if ($("#dcDestState").is(":checked")) {
+            matrices = matrices + $("#dcDestState").val() + ",";
+        }
+        if ($("#dcCmType").is(":checked")) {
+            matrices = matrices + $("#dcCmType").val() + ",";
+        }
+        if ($("#dcZone").is(":checked")) {
+            matrices = matrices + $("#dcZone").val() + ",";
+        }
+
+        matrices = matrices.substring(0, matrices.length - 1);
+
+        var body = {
+            "startDate": startDate,
+            "endDate": endDate,
+            "env": envValue,
+            "profileName": profileName,
+            "setOfMatrics": matrices,
+            "emailIds": emailId
+        };
+
+        var validRequest = true;
+        if (!body) {
+            console.log("request body can't be empty");
+        }
+
+        //Validation for the difference between start date and end date
+        var startDate = new Date(body.startDate);
+        var endDate = new Date(body.endDate);
+
+        var hours = (endDate - startDate) / 36e5;
+
+        if (hours < 0) {
+            $("#alertDate").text("End date is before the start date,please correct");
+            $("#alertDate").css("visibility", "visible");
+            console.log("end date is before the start date");
+            validRequest = false;
+        }
+        if (hours > 24) {
+            $("#alertDate").text("currently we are supporting only max of 24 hours of data. Please reduce the time range");
+            $("#alertDate").css("visibility", "visible");
+            console.log("currently we are supporting only max of 24 hours of data. Please reduce the time range");
+            validRequest = false;
+        }
+
+
+        if (!body.emailIds) {
+            $("#emailId").css("background-color", "#ffc7b3");
+            $("#emailId").attr("placeholder", "emailId list passed is empty!!! Please pass valid emailId")
+            validRequest = false;
+        }
+
+        //validation for the setOfMatrices
+        if (!body.setOfMatrics) {
+            validRequest = false;
+            $("#alertDiv").text("Set of matrics selected is empty.Please select atleast one");
+            $("#alertDiv").css("visibility", "visible");
+            console.log("set of matrics selected is empty.Please select atleast one ");
+
+        }
+
+
+        //validation for the emailIds
+        var emails = body.emailIds.split(",");
+        emails.forEach(function (value) {
+            var email = value.trim();
+            if (!email.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)) {
+                validRequest = false;
+                $("#emailId").css("background-color", "#ffc7b3");
+                $("#emailId").attr("placeholder", "invalid email Id");
+
+            }
+        });
+        console.log(JSON.stringify(body));
+        if (validRequest) {
+            $.post("/api/report",
+                body).done(function (data) {
+                $("#successResponse").text(data);
+                $("#successResponse").css("visibility", "visible");
+            }).fail(function (xhr, status, error) {
+                alert(error + " " + xhr.body);
+            });
+
+        }
+
+
+    });
+
+
+</script>
+
+</body>
+
+</html>

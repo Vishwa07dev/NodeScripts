@@ -1,0 +1,13 @@
+{
+  "mongoDetails": {
+    "prod": {
+      "connectionUrl": "mongodb://mcse:mcsew@10.116.181.15:27017/mcse-trace"
+    },
+    "stg": {
+      "connectionUrl": "mongodb://10.116.153.231:27017/mcse-trace"
+    },
+    "pqa": {
+      "connectionUrl": "mongodb://100.65.4.1:27017/mcse-trace"
+    }
+  }
+}
